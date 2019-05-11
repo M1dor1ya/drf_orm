@@ -127,6 +127,9 @@ DATABASES = {
         'PASSWORD': 'myadmin@816',     # 密码
         'HOST': '192.168.2.101',    # 主机
         'PORT': '3306',         # 数据库使用的端口
+        # 'OPTIONS': {
+        #     'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        # },
     }
 }
 

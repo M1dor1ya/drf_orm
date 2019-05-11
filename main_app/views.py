@@ -1,9 +1,12 @@
 from rest_framework.views import APIView
-from .models import Graph
-from .serializers import GraphSerializer
+from rest_framework import viewsets
+from .models import Graph, Dev
+from .serializers import GraphSerializer, DevSerializer
 from django.utils.six import BytesIO
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
+from rest_framework import permissions
+
 
 
 class GraphView(APIView):
@@ -59,10 +62,17 @@ class GraphView(APIView):
         """
         stream = BytesIO(request.body)
         data = JSONParser().parse(stream)
-        print(data)
-        print(type(data))
         g_id = data['id']
-        print(g_id)
         obj = Graph.objects.get(id=g_id)
         obj.delete()
         return Response({"status": 0})
+
+class DeViewset(viewsets.ModelViewSet):
+    """
+    ModelViewset继承了四个混类和一个泛类，自动会实现增删查改的方法
+    viewset相当于是视图的集合，综合了多个方法
+    """
+    queryset = Dev.objects.all().order_by('id')
+    serializer_class = DevSerializer
+    lookup_field = 'id'  # 定义通过哪个参数来定位实例
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
