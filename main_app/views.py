@@ -75,4 +75,6 @@ class DeViewset(viewsets.ModelViewSet):
     queryset = Dev.objects.all().order_by('id')
     serializer_class = DevSerializer
     lookup_field = 'id'  # 定义通过哪个参数来定位实例
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    #permission_classes = (permissions.IsAdminUser,)  # 设置该视图的权限
+    from g_conf.permissions import AdminPermissions
+    permission_classes = (AdminPermissions, )
