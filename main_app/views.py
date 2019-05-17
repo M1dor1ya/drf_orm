@@ -30,6 +30,7 @@ class GraphView(APIView):
         """
         graph_conf 2|5|10000
         反序列化，将JSON形式数据转换为流的形式，然后将流数据转化为Python数据类型
+        注意事项：如果传入的data存在外键信息，只需传入外键值就好，不需要像objects.create一样传入一个实例
         :param request:
         :return:
         """
@@ -75,6 +76,6 @@ class DeViewset(viewsets.ModelViewSet):
     queryset = Dev.objects.all().order_by('id')
     serializer_class = DevSerializer
     lookup_field = 'id'  # 定义通过哪个参数来定位实例
-    #permission_classes = (permissions.IsAdminUser,)  # 设置该视图的权限
-    from g_conf.permissions import AdminPermissions
-    permission_classes = (AdminPermissions, )
+    permission_classes = (permissions.IsAdminUser,)  # 设置该视图的权限
+    #from g_conf.permissions import AdminPermissions
+    #permission_classes = (AdminPermissions, )
